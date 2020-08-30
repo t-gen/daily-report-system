@@ -1,41 +1,22 @@
 package utils;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
-/**
- * Servlet implementation class DBUtil
- */
-@WebServlet("/DBUtil")
-public class DBUtil extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DBUtil() {
-        super();
-        // TODO Auto-generated constructor stub
+public class DBUtil {
+    private static final String PERSISTENCE_UNIT_NAME = "daily_report_system";
+    private static EntityManagerFactory emf;
+
+    public static EntityManager createEntityManager() {
+        return _getEntityManagerFactory().createEntityManager();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+    private static EntityManagerFactory _getEntityManagerFactory() {
+        if(emf == null) {
+            emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
+        return emf;
+    }
 }
