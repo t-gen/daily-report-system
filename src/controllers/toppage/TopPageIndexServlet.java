@@ -28,8 +28,12 @@ public class TopPageIndexServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if(request.getSession().getAttribute("flush") != null){
+            request.setAttribute("flush",request.getSession().getAttribute ("flash"));
+            request.getSession().removeAttribute("flash");
+        }
+
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/topPage/index.jsp");
-        response.getWriter().append("Served at: ").append(request.getContextPath());
         rd.forward(request, response);
     }
 
